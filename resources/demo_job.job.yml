@@ -1,0 +1,17 @@
+resources:
+  jobs:
+    demo_jobs:
+      name: demo_jobs
+      tasks:
+        - task_key: notebook_1_task
+          notebook_task:
+            notebook_path: ../notebooks/notebook_1.ipynb
+            source: WORKSPACE
+          environment_key: notebook_task_environment
+      queue:
+        enabled: true
+      environments:
+        - environment_key: notebook_task_environment
+          spec:
+            environment_version: "5"
+      performance_target: PERFORMANCE_OPTIMIZED

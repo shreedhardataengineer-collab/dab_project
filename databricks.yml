@@ -1,0 +1,65 @@
+# This is a Declarative Automation Bundle definition for dab_project.
+# See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
+bundle:
+  name: dab_project
+  uuid: 9106aa22-7dfb-4cc5-8950-e4cc5915e739
+
+include:
+  - resources/*.yml
+
+# Variable declarations. These variables are assigned in the dev/prod targets below.
+variables:
+  catalog:
+    default: "citibike_dev"
+    description: The catalog to use
+  schema:
+    description: The schema to use
+  dev_flag:
+    default: true
+    description: Flag to indicate if this is a dev environment
+
+
+targets:
+  dev:
+    # The default target uses 'mode: development' to create a development copy.
+    # - Deployed resources get prefixed with '[dev my_user_name]'
+    # - Any job schedules and triggers are paused by default.
+    # See also https://docs.databricks.com/dev-tools/bundles/deployment-modes.html.
+    mode: development
+    default: true
+    workspace:
+      host: https://adb-7405616585680287.7.azuredatabricks.net
+      
+    variables:
+      catalog: citibike_dev
+      schema: dev
+    presets:
+      artifacts_dynamic_version: true
+  test:
+    mode: production
+    presets:
+      name_prefix: '[testing] '
+    workspace:
+      host: https://adb-7405609445077348.8.azuredatabricks.net
+      # We explicitly deploy to /Workspace/Users/shreedhardataengineer@gmail.com to make sure we only have a single copy.
+      root_path: /Workspace/Shared/.bundle/${bundle.name}/${bundle.target}
+    variables:
+      catalog: citibike_test
+      schema: prod
+      dev_flag: false
+    permissions:
+      - user_name: shreedhardataengineer@gmail.com
+        level: CAN_MANAGE
+  prod:
+    mode: production
+    workspace:
+      host: https://adb-7405610993244065.5.azuredatabricks.net
+      # We explicitly deploy to /Workspace/Users/shreedhardataengineer@gmail.com to make sure we only have a single copy.
+      root_path: /Workspace/Shared/.bundle/${bundle.name}/${bundle.target}
+    variables:
+      catalog: citibike_prod
+      schema: prod
+      dev_flag: false
+    permissions:
+      - user_name: shreedhardataengineer@gmail.com
+        level: CAN_MANAGE
