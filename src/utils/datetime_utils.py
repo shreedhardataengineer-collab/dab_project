@@ -1,4 +1,4 @@
-from pyspark.sql.functions import to_date, col
+from pyspark.sql.functions import current_timestamp,pytestto_date, col
 
 def timestamp_to_date_col(spark, df, timestamp_col, output_col):
     """
