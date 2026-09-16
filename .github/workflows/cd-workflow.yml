@@ -82,7 +82,3 @@ jobs:
           databricks bundle deploy \
             --target prod \
             --profile PROD
-        run: |
-          databricks bundle deploy \
-            --target prod \
-            --profile PROD
