@@ -48,7 +48,7 @@ targets:
       schema: prod
       dev_flag: false
     permissions:
-      - user_name: shreedhardataengineer@gmail.com
+      - service_principal_name: 04b578d7-2b77-47f5-8155-4079471e205b
         level: CAN_MANAGE
   prod:
     mode: production
@@ -61,5 +61,5 @@ targets:
       schema: prod
       dev_flag: false
     permissions:
-      - user_name: shreedhardataengineer@gmail.com
+      - service_principal_name: 86891eff-a245-4b0a-ac8b-f1da2775a615
         level: CAN_MANAGE
